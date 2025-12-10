@@ -5,6 +5,8 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { ENV } from './config/env.validation';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { ExceptionFilter } from './common/filters/exception.filter';
 
 // Nest App with Fastify
 async function App() {
@@ -37,6 +39,12 @@ async function App() {
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   });
+
+  // Global Interceptors
+  app.useGlobalInterceptors(new ResponseInterceptor());
+
+  // Global Exception Filters
+  app.useGlobalFilters(new ExceptionFilter());
 
   // Start the Server
   const PORT = ENV.SYSTEM.PORT;

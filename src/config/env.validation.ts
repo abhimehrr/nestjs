@@ -18,6 +18,10 @@ export const envValidationSchema = z
         message: 'Invalid environment mode',
       }),
 
+    // Databases
+    MONGODB_URI: z.string().min(1),
+    POSTGRESQLDB_URI: z.string().min(1),
+
     // Cors: Allowed Origins (comma separated)
     CORS_ALLOWED_ORIGINS: z
       .string()
@@ -28,10 +32,19 @@ export const envValidationSchema = z
   })
   .transform((data) => {
     return {
+      // System Config
       SYSTEM: {
         PORT: data.PORT,
         NODE_ENV: data.NODE_ENV,
       },
+
+      // Databases Config
+      DB: {
+        MONGODB_URI: data.MONGODB_URI,
+        POSTGRESQLDB_URI: data.POSTGRESQLDB_URI,
+      },
+
+      // Cors Config
       CORS: {
         ALLOWED_ORIGINS: data.CORS_ALLOWED_ORIGINS,
       },
