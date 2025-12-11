@@ -192,7 +192,7 @@ export const formatDuration = (
   }
 
   // Seconds
-  return `${seconds} second${seconds !== 1 ? 's' : ''}`;
+  return `${Math.floor(seconds)} second${Math.floor(seconds) !== 1 ? 's' : ''}`;
 };
 
 /**
